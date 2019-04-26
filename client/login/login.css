@@ -7,13 +7,10 @@ html{
 body{
   text-align: center;
   overflow: hidden;
-  background-color: rgba(100,100,100, 0.6);
+  /* background-color: rgba(100,100,100, 0.6); */
   background-image: url(../img/interlaced.png);
   background-blend-mode: lighten;
   min-width: 275px;
-  /* -webkit-animation: bgGradient 6s ease infinite;
-  -moz-animation: bgGradient 6s ease infinite;
-  animation: bgGradient 6s ease infinite; */
 }
 
 @media screen and (max-width: 900px){
@@ -23,24 +20,17 @@ body{
   }
 }
 
-.bg-container{
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  height: 1180px;
-  width: 100%;
-}
-
 .container, .container2{
   top: 130px;
   left: 50%;
   transform: translateX(-50%);
   position: absolute;
-  padding: 20px;
+  padding: 10px;
   width: 350px;
   height: 390px;
-  background-color: rgba(100,100,255, 0.7);
-  box-shadow: 1px 1px 1px rgba(100,100,100, 0.6);
+  background-color: rgba(33, 150, 243, 0.7);
+  border-radius: 20px;
+  /* box-shadow: 1px 1px 1px rgba(100,100,100, 0.6); */
   color: rgb(44,44,44);
   z-index: 2;
   transition: all 350ms;
@@ -64,6 +54,7 @@ body{
 }
 
 .login-btn, .register-btn{
+  border-radius: 20px;
   margin: 20px 0 0 0;
   height: 36px;
   width: 279px;
@@ -71,7 +62,7 @@ body{
   background-color: rgb(240,240,240);
   font-size: 140%;
   transition: all 300ms;
-  box-shadow: 1px 1px 1px rgba(100,100,100, 0.6);
+  /* box-shadow: 1px 1px 1px rgba(100,100,100, 0.6); */
 }
 
 .login-btn{
@@ -95,11 +86,12 @@ body{
   border: none;
   transition: all 300ms;
   font-size: 140%;
-  box-shadow: 1px 1px 1px rgba(100,100,100, 0.6);
+  border-radius: 20px;
+  /* box-shadow: 1px 1px 1px rgba(100,100,100, 0.6); */
 }
 
 .show:hover{
-  background-color: rgb(220,220,200);
+  background-color: rgb(250,250,250);
 }
 
 .pwHintRegister, .nameHintRegister, .nameHintLogin, .pwHintLogin{

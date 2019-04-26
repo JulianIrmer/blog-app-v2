@@ -3,9 +3,9 @@ body{
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  background-image: url('../img/interlaced.png');
-  background-color: rgba(255,255,255,0.5);
-  background-blend-mode: lighten;  
+  background-image: url(../img/interlaced.png);
+  /* background-color: rgba(255,255,255,0.5); */
+  background-blend-mode: lighten;
 }
 
 header{
@@ -149,7 +149,9 @@ header{
 
 .post{
   width: 100%;
-  background-color: rgba(144, 202, 249, 0.3);
+  background-color: rgba(144, 202, 249, 0.4);
+  background-image: url(../img/dust_scratches.png);
+  background-blend-mode: color-burn;
   border-radius: 20px;
   min-height: 110px;
   padding: 10px;
@@ -157,9 +159,9 @@ header{
 }
 
 
-
 .post:nth-child(odd){
-  background-color: rgba(144, 202, 249, 0.8);
+  background-image: url(../img/dust_scratches.png);
+  background-color: rgba(98, 181, 248, );
 }
 
 .post-title{
@@ -175,6 +177,12 @@ header{
 
 .post-date{
   margin-right: 10px;
+}
+
+.post-author{
+  width: 30%;
+  margin: 0 auto;
+  border-top: 1px solid rgba(100,100,100, 0.4);
 }
 
 .delete-btn{
