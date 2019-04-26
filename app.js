@@ -6,7 +6,6 @@ const cors = require('cors');
 const mongojs = require('mongojs');
 const bcrypt = require('bcrypt');
 const http = require('http').Server(app);
-const io = require('socket.io')(http);
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
@@ -16,6 +15,7 @@ const port = 5000;
 const DB_URL = 'mongodb://admin:lala1234@ds147566.mlab.com:47566/blog-app';
 let seqID = 0;
 const salt = bcrypt.genSaltSync(10);
+
 
 // ########## DATABASE CONNECTION ##########
 db = mongojs(DB_URL, ['Posts', 'User']);
@@ -61,7 +61,6 @@ let authenticate = (req, res, next) => {
 
 
 // ######### VIEW ROUTES #########
-
 // landing
 app.get('/', (req, res) => {
   res.sendFile(__dirname+ '/client/html/index.html');
@@ -115,7 +114,6 @@ app.post('/api/register', (req, res) => {
   const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
-
 
   // Check if name is available
   db.User.findOne({name:name}, (err, result) => {
@@ -235,6 +233,7 @@ app.post('/api/send', (req, res) => {
   data.id = seqID;
   data.uid = bcrypt.hashSync('seqID', salt);
   data.comments = [];
+
   db.Posts.save(data);
 });
 
@@ -242,7 +241,6 @@ app.post('/api/send', (req, res) => {
 app.post('/api/send', (req, res) => {
   let data = req.body;
   data.uid = bcrypt.hashSync(id, salt);
-  
 });
 
 
@@ -260,13 +258,14 @@ app.post('/api/delete/:id', (req, res) => {
   });
 });
 
+
 // ########## START EXPRESS SERVER ##########
 http.listen(port, (err) => {
   if(err){
     console.error(err);
   }
   else{
-    console.log(`Server listening on http://192.168.2.25:${port}`);
+    console.log(`Server listening on localhost:${port}`);
   };
 });
 
