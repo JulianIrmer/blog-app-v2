@@ -56,7 +56,7 @@ app.use(express.static(__dirname + '/client'));
 
 // check if the user is already logged in
 let authenticate = (req, res, next) => {
-  console.log(req.session.username);
+  // console.log(req.session.username);
   if(!req.session.username){
     res.redirect('/login');
   }
@@ -130,7 +130,6 @@ app.post('/api/register', (req, res) => {
     }
     else if(result != null){
       console.error('name not valid');
-      console.log(result);
       res.json({name: false});
     }
     else{
@@ -198,10 +197,10 @@ app.post('/api/login', (req, res) => {
             res.json({'login': false});
           } else {
             activeUser = username;
-            console.log('loggin in...');
+            console.log(`${activeUser} logged in.`);
             req.session.username = username;
             req.session.userID = user.id;
-            console.log(req.session.username);
+            // console.log(req.session.username);
             res.json({'login':true});
           };
         })
@@ -237,10 +236,21 @@ app.get('/api', (req, res) => {
 // ########## SAVE A POST ##########
 app.post('/api/send', (req, res) => {
   let data = req.body;
+
   seqID++;
   data.id = seqID;
+  data.uid = bcrypt.hashSync('seqID', salt);
+  data.comments = [];
   db.Posts.save(data);
 });
+
+// ########## ADD A COMMENT ##########
+app.post('/api/send', (req, res) => {
+  let data = req.body;
+  data.uid = bcrypt.hashSync(id, salt);
+  
+});
+
 
 // ########## DELETE SINGLE POST ##########
 app.post('/api/delete/:id', (req, res) => {

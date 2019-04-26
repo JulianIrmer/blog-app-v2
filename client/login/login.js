@@ -50,6 +50,7 @@ registerBtn.addEventListener('click', (event) => {
   let pwCheck = false;
   let nameCheck = false;
   let emailCheck = false;
+  
   // get data from input
   const name = document.querySelector('.register-name').value;
   const email = document.querySelector('.register-email').value;
@@ -101,9 +102,9 @@ registerBtn.addEventListener('click', (event) => {
   
   // check all requirements
   if(pwCheck && nameCheck && emailCheck){
-    console.log('hello');
+
     // make post request to api and send the user data
-    fetch('http://localhost:5000/api/register', {
+    fetch('/api/register', {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
@@ -151,7 +152,6 @@ event.preventDefault();
 
 const name = document.querySelector('.login-name').value;
 const password = document.querySelector('.login-password').value;
-const screenWidth = window.innerWidth;
 
 const data = {
   name,

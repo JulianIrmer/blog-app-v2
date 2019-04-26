@@ -15,6 +15,7 @@ const logout = document.querySelector('.logout-li');
 
 //GLOBAL VARIABLES
 let currentUser;
+let isLoggedIn = false;
 
 //API ROUTES
 // const API_GET_ALL = 'http://localhost:5000/api';
@@ -49,9 +50,11 @@ function checkSession(){
       if(response.isLoggedIn){
         login.innerHTML = 'Hello, '+response.username+'!';
         register.classList.add('hidden');
+        isLoggedIn = true;
       }
       else{
         logout.classList.add('hidden');
+        postForm.classList.add('hidden');
       };
     })
     .catch(err => console.log(err));
@@ -145,6 +148,7 @@ function loadAllPosts() {
         date.textContent = post.time;
         date.className = 'post-date';
 
+
         //add all new elements to the div and add the div to the posts-div
         div.appendChild(title);
         div.appendChild(content);
@@ -175,8 +179,18 @@ function loadAllPosts() {
           div.appendChild(delBtn);
         };
 
+        if(isLoggedIn){
+          const addCommentBtn = document.createElement('div');
+          addCommentBtn.textContent = `Add comment(${post.comments.length})`;
+          addCommentBtn.className = 'add-comment-btn';
+          addCommentBtn.id = post.uid;
 
-
+          addCommentBtn.addEventListener('click', (addCommentBtn) => {
+            let id = addCommentBtn.path[0].id;
+            console.log(id);
+          });
+          div.appendChild(addCommentBtn);
+        };
         postsElement.appendChild(div);
       });
   });
