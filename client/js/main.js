@@ -45,12 +45,12 @@ function checkSession(){
   fetch(API_CHECK_SESSION)
     .then(response => {return response.json()})
     .then(response => {
-      console.log(response);
       currentUser = response.username;
       if(response.isLoggedIn){
         login.innerHTML = 'Hello, '+response.username+'!';
         register.classList.add('hidden');
         isLoggedIn = true;
+        login.style.pointerEvents = 'none';
       }
       else{
         logout.classList.add('hidden');
@@ -90,7 +90,6 @@ postForm.addEventListener('submit', (event) => {
   };
 
   
-  console.log(data);
   if(isContent && isTitle){
   //save a post to mongodb
     fetch(API_SEND, {
@@ -99,7 +98,8 @@ postForm.addEventListener('submit', (event) => {
       headers: {
         'content-type':'application/json'
       }
-    });
+    })
+    .catch(err => console.log(err));
   };
   //reload the window
   // window.location.reload();
@@ -145,7 +145,7 @@ function loadAllPosts() {
 
         //add the date
         const date = document.createElement('small');
-        date.textContent = post.time;
+        date.textContent = post.time.substring(0,5);
         date.className = 'post-date';
 
 
@@ -179,18 +179,18 @@ function loadAllPosts() {
           div.appendChild(delBtn);
         };
 
-        if(isLoggedIn){
-          const addCommentBtn = document.createElement('div');
-          addCommentBtn.textContent = `Add comment(${post.comments.length})`;
-          addCommentBtn.className = 'add-comment-btn';
-          addCommentBtn.id = post.uid;
+        // if(isLoggedIn){
+        //   const addCommentBtn = document.createElement('div');
+        //   addCommentBtn.textContent = `Add comment(${post.comments.length})`;
+        //   addCommentBtn.className = 'add-comment-btn';
+        //   addCommentBtn.id = post.uid;
 
-          addCommentBtn.addEventListener('click', (addCommentBtn) => {
-            let id = addCommentBtn.path[0].id;
-            console.log(id);
-          });
-          div.appendChild(addCommentBtn);
-        };
+        //   addCommentBtn.addEventListener('click', (addCommentBtn) => {
+        //     let id = addCommentBtn.path[0].id;
+        //     console.log(id);
+        //   });
+        //   div.appendChild(addCommentBtn);
+        // };
         postsElement.appendChild(div);
       });
   });
