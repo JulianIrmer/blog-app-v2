@@ -33,13 +33,7 @@ const sessConfig = {
   name: 'sid',
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: true
-  ,
-  // cookie: {
-  //   maxAge: 1000*60*60,
-  //   sameSite: true
-  // }
-  // ,
+  saveUninitialized: true,
   store: new MongoStore({
     url: DB_URL,
     ttl: 60*60, //(sec*min*hour*day)
