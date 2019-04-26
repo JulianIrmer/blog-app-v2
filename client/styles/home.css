@@ -1,78 +1,82 @@
-
-body{
+body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
   background-image: url(../img/interlaced.png);
-  /* background-color: rgba(255,255,255,0.5); */
-  background-blend-mode: lighten;
+  background-blend-mode: color-burn;
 }
 
-header{
-  background-color: #2196F3;
+header {
   height: 200px;
   width: 100%;
   text-align: center;
   display: grid;
   align-items: center;
   border-bottom-right-radius: 30px;
+  background-color: rgba(240, 240, 240, 0.5);
 }
-.user{
+
+.user {
   float: right;
   list-style-type: none;
 }
 
-.user li{
+.user li {
   float: left;
   padding: 10px 10px 8px 10px;
   font-size: 140%;
   cursor: pointer;
 }
 
-.user li:hover{
+.user li:hover {
   color: #3F51B5;
 }
 
-.login, .register{
+.login,
+.register {
   position: relative;
   right: 67%;
   width: 200px;
   height: 200px;
   padding: 30px;
   margin: 0 auto;
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 3;
   display: grid;
   opacity: 0.8;
 }
 
-.register{
+.register {
   height: 270px;
   z-index: 300;
 }
 
-.h3-login, .h3-register{
-  color: rgb(140,140,140);
+.h3-login,
+.h3-register {
+  color: rgb(140, 140, 140);
   text-align: center;
 }
 
-.login > input, .register > input{
-  border: 1px solid rgb(180,80,80);
+.login>input,
+.register>input {
+  border: 1px solid rgb(180, 80, 80);
   padding: 10px;
   margin: 0 0 10px 0;
   text-align: center;
 }
 
-.register > button, .login > button{
+.register>button,
+.login>button {
   width: 100%;
   border: 0;
   padding: 10px;
-  background-color: rgba(200,200,240, 1);
-  border: 1px solid rgb(140,140,140);
+  background-color: rgba(200, 200, 240, 1);
+  border: 1px solid rgb(140, 140, 140);
   cursor: pointer;
 }
 
-.container1, .container2{
+.container1,
+.container2 {
   position: absolute;
   display: grid;
   align-items: center;
@@ -81,12 +85,12 @@ header{
   width: 100%;
   padding: 0;
   margin: 0;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0, 0, 0, 0.9);
   z-index: 3;
 }
 
-.popup{
-  background-color: rgba(200,200,200,0.6);
+.popup {
+  background-color: rgba(200, 200, 200, 0.6);
   color: black;
   height: auto;
   padding: 20px;
@@ -98,7 +102,7 @@ header{
   z-index: 4;
 }
 
-.wrapper{
+.wrapper {
   width: 60vw;
   max-width: 800px;
   min-width: 600px;
@@ -107,47 +111,47 @@ header{
   z-index: 2;
 }
 
-@media screen and (max-width: 680px){
-  .wrapper{
+@media screen and (max-width: 680px) {
+  .wrapper {
     width: 95%;
     min-width: 0px;
   }
 }
 
-.post-form{
+.post-form {
   height: 50px;
   transition: height 750ms ease-in-out;
 }
 
-#title{
+#title {
   margin: 0 0 10px 0;
   padding: 10px;
   width: 100%;
   text-align: center;
-  border: 1px solid rgb(140,140,140);
+  border: 1px solid rgb(140, 140, 140);
   transition: opacity 750ms ease-in-out;
 }
 
-#content{
+#content {
   width: 100%;
   padding: 10px;
-  border: 1px solid rgb(140,140,140);
+  border: 1px solid rgb(140, 140, 140);
   transition: opacity 750ms ease-in-out;
 }
 
-.send-btn{
+.send-btn {
   margin: 20px 0 0 0;
   padding: 10px;
   width: 100px;
   background-color: rgba(144, 202, 249, 0.3);
-  border: 1px solid rgb(140,140,140);
+  border: 1px solid rgb(140, 140, 140);
   cursor: pointer;
   transform: translateY(-150px);
   transition: all 750ms ease-in-out;
   border-radius: 10px;
 }
 
-.post{
+.post {
   width: 100%;
   background-color: rgba(144, 202, 249, 0.4);
   background-image: url(../img/dust_scratches.png);
@@ -158,99 +162,81 @@ header{
   margin: 80px 0 0 0;
 }
 
-
-.post:nth-child(odd){
+.post:nth-child(odd) {
   background-image: url(../img/dust_scratches.png);
   background-color: rgba(98, 181, 248, );
 }
 
-.post-title{
+.post-title {
   padding: 0 0 5px 0;
-  border-bottom: 1px solid rgb(180,80,80);
+  border-bottom: 1px solid rgb(180, 80, 80);
 }
 
-.post-content{
+.post-content {
   padding: 0 20px 0 20px;
   text-align: left;
   font-size: 110%;
 }
 
-.post-date{
+.post-date {
   margin-right: 10px;
 }
 
-.post-author{
+.post-author {
   width: 30%;
   margin: 0 auto;
-  border-top: 1px solid rgba(100,100,100, 0.4);
+  border-top: 1px solid rgba(100, 100, 100, 0.4);
 }
 
-.delete-btn{
+.delete-btn {
   padding: 10px;
   display: inline-block;
   cursor: pointer;
-  background-color: rgb(0,0,0,0);
-  color: rgb(255,0,0);
+  background-color: rgb(0, 0, 0, 0);
+  color: rgb(255, 0, 0);
   font-weight: bolder;
 }
 
-.hidden{
+.hidden {
   visibility: hidden;
   opacity: 0.0;
   display: none;
   pointer-events: none;
 }
 
-.blur{
+.blur {
   filter: blur(5px);
 }
-.active{
-  background-color: rgba(0,0,0,0.6);
-  color: rgb(180,80,80);
+
+.active {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: rgb(180, 80, 80);
 }
 
-.center, .center2{
+.center,
+.center2 {
   position: absolute;
   left: 50%;
   width: 190px;
   z-index: -10;
 }
 
-.hidden2{
+.hidden2 {
   opacity: 0.0;
 }
 
-/* @media only screen and (max-width: 600px){
-  header{
-    height: 100px;
-  }
-  header h1{
+@media screen and (max-width: 300px) {
+  header h1 {
     font-size: 170%;
-    padding: 10px 0 0 0;
-    margin: 0;
   }
-  .wrapper{
-    width: 90%;
-    margin: 20px 0 0 10px;
-  }
-  .user{
-    font-size: 60%;
-    margin: 0 auto;
-  }
-} */
 
-@media screen and (max-width: 300px){
-  header h1{
-    font-size: 170%;
-  }
-  .login-li, .register-li, .logout-li {
+  .login-li,
+  .register-li,
+  .logout-li {
     font-size: 10px;
   }
 
-  .user > li {
-
-  }
-  body{
+  body {
     background-color: pink;
   }
 }

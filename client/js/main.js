@@ -38,21 +38,22 @@ const API_CHECK_SESSION = '/api/checksession';
 window.onload = () => {
   checkSession();
   loadAllPosts();
-}; 
+};
 
 // check if user if logged in
-function checkSession(){
+function checkSession() {
   fetch(API_CHECK_SESSION)
-    .then(response => {return response.json()})
+    .then(response => {
+      return response.json()
+    })
     .then(response => {
       currentUser = response.username;
-      if(response.isLoggedIn){
-        login.innerHTML = 'Hello, '+response.username+'!';
+      if (response.isLoggedIn) {
+        login.innerHTML = 'Hello, ' + response.username + '!';
         register.classList.add('hidden');
         isLoggedIn = true;
         login.style.pointerEvents = 'none';
-      }
-      else{
+      } else {
         logout.classList.add('hidden');
         postForm.classList.add('hidden');
       };
@@ -72,11 +73,11 @@ postForm.addEventListener('submit', (event) => {
   let isContent = false;
   let isTitle = false;
 
-  if(title.length > 0){
+  if (title.length > 0) {
     isTitle = true;
   };
 
-  if(content.length > 0){
+  if (content.length > 0) {
     isContent = true;
   };
 
@@ -89,17 +90,17 @@ postForm.addEventListener('submit', (event) => {
     author
   };
 
-  
-  if(isContent && isTitle){
-  //save a post to mongodb
+
+  if (isContent && isTitle) {
+    //save a post to mongodb
     fetch(API_SEND, {
-      method: 'POST',
-      body: JSON.stringify(data),
-      headers: {
-        'content-type':'application/json'
-      }
-    })
-    .catch(err => console.log(err));
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .catch(err => console.log(err));
   };
   //reload the window
   // window.location.reload();
@@ -135,7 +136,7 @@ function loadAllPosts() {
 
         //add the author
         const author = document.createElement('p');
-        author.textContent = 'written by '+post.author;
+        author.textContent = 'written by ' + post.author;
         author.className = 'post-author';
 
         //add the time
@@ -145,7 +146,7 @@ function loadAllPosts() {
 
         //add the date
         const date = document.createElement('small');
-        date.textContent = post.time.substring(0,5);
+        date.textContent = post.time.substring(0, 5);
         date.className = 'post-date';
 
 
@@ -157,7 +158,7 @@ function loadAllPosts() {
         div.appendChild(date);
 
         //add delete button
-        if(currentUser == post.author){
+        if (currentUser == post.author) {
           const delBtn = document.createElement('div');
           delBtn.textContent = 'X';
           delBtn.className = 'delete-btn';
@@ -167,14 +168,14 @@ function loadAllPosts() {
           delBtn.addEventListener('click', (delBtn) => {
             let postid = delBtn.path[0].id;
             console.log(postid);
-            fetch(API_DELETE_ID+postid, {
+            fetch(API_DELETE_ID + postid, {
               method: 'POST',
               headers: {
-                'content-type':'application/json'
+                'content-type': 'application/json'
               }
             });
-          //make sure the server has enough time to fetch the new data
-          setTimeout(loadAllPosts, 500);
+            //make sure the server has enough time to fetch the new data
+            setTimeout(loadAllPosts, 500);
           });
           div.appendChild(delBtn);
         };
@@ -193,12 +194,12 @@ function loadAllPosts() {
         // };
         postsElement.appendChild(div);
       });
-  });
+    });
 };
 
 // login button
 login.addEventListener('click', () => {
-  if(login.textContent == 'Login'){
+  if (login.textContent == 'Login') {
     window.location.replace('/home');
   };
 });
@@ -213,12 +214,10 @@ logout.addEventListener('click', () => {
   window.location.replace('/');
 });
 
-function editor(){
+function editor() {
   document.querySelector('#title').classList.remove('hidden2');
   document.querySelector('#content').classList.remove('hidden2');
-  document.querySelector('.post-form').style.height = 200 +'px';
+  document.querySelector('.post-form').style.height = 200 + 'px';
   send.style.transform = 'translateY(0px)';
   send.innerHTML = 'Send';
 };
-
-
