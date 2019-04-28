@@ -1,43 +1,37 @@
-//HTML ELEMENTS
-const postForm = document.querySelector('.post-form');
-const loginForm = document.querySelector('.login');
-const registerForm = document.querySelector('.register');
-const postsElement = document.querySelector('.posts');
-const header = document.querySelector('header');
-const wrapper = document.querySelector('.wrapper');
-const center = document.querySelector('.center');
-const center2 = document.querySelector('.center2');
-const popup = document.querySelector('.popup');
-const send = document.querySelector('.send-btn');
-const login = document.querySelector('.login-li');
-const register = document.querySelector('.register-li');
-const logout = document.querySelector('.logout-li');
 
-//GLOBAL VARIABLES
-let currentUser;
-let isLoggedIn = false;
+let cleanResults = [];
+let searchResults = [];
 
-//API ROUTES
-// const API_GET_ALL = 'http://localhost:5000/api';
-// const API_SEND = 'http://localhost:5000/api/send';
-// const API_DELETE_ALL = 'http://localhost:5000/api/delete';
-// const API_DELETE_ID = 'http://localhost:5000/api/delete/';
-// const API_LOGIN = 'http://localhost:5000/api/login';
-// const API_REGISTER = 'http://localhost:5000/api/register';
-// const API_CHECK_SESSION = 'http://localhost:5000/api/checksession';
 
-const API_GET_ALL = '/api';
-const API_SEND = '/api/send';
-const API_DELETE_ALL = '/api/delete';
-const API_DELETE_ID = '/api/delete/';
-const API_LOGIN = '/api/login';
-const API_REGISTER = '/api/register';
-const API_CHECK_SESSION = '/api/checksession';
-
-//get all posts from mongodb
 window.onload = () => {
   checkSession();
   loadAllPosts();
+
+  if(window.innerWidth <= 600){
+    burgerMenu.classList.remove('hidden');
+  };
+  if(window.innerWidth > 600){
+    burgerMenu.classList.add('hidden');
+  };
+
+  // open and close the mobile nav on click event
+  burgerMenu.addEventListener('click', () => {
+    mobileNav.classList.toggle('hidden');
+    bar1.classList.toggle('left-to-right');
+    bar2.classList.toggle('no-opacity');
+    bar3.classList.toggle('right-to-left');
+  });
+
+  // close mobile nav if link is clicked
+  for(let el of mobileLi){
+    el.addEventListener('click', () => {
+      mobileNav.classList.add('hidden');
+      bar1.classList.remove('left-to-right');
+      bar2.classList.remove('no-opacity');
+      bar3.classList.remove('right-to-left');
+      burgerMenu.classList.remove('no-border');
+    });
+  };
 };
 
 // check if user if logged in
@@ -49,10 +43,9 @@ function checkSession() {
     .then(response => {
       currentUser = response.username;
       if (response.isLoggedIn) {
-        login.innerHTML = 'Hello, ' + response.username + '!';
+        login.innerHTML = 'Dashboard';
         register.classList.add('hidden');
         isLoggedIn = true;
-        login.style.pointerEvents = 'none';
       } else {
         logout.classList.add('hidden');
         postForm.classList.add('hidden');
@@ -62,7 +55,7 @@ function checkSession() {
 };
 
 //create a post
-postForm.addEventListener('submit', (event) => {
+send.addEventListener('click', (event) => {
   event.preventDefault();
   const title = document.querySelector('#title').value;
   const content = document.querySelector('#content').value;
@@ -90,7 +83,7 @@ postForm.addEventListener('submit', (event) => {
     author
   };
 
-
+  console.log('hello');
   if (isContent && isTitle) {
     //save a post to mongodb
     fetch(API_SEND, {
@@ -112,98 +105,33 @@ postForm.addEventListener('submit', (event) => {
 
 //create new html elements for every element in the array
 function loadAllPosts() {
-  postsElement.innerHTML = '';
+  column1.innerHTML = '';
+  column2.innerHTML = '';
+  column3.innerHTML = '';
+
   fetch(API_GET_ALL)
     .then((response) => {
       return response.json();
     })
     .then((allPosts) => {
-      allPosts.reverse();
-      allPosts.forEach(post => {
-        //create a new div for every post
-        const div = document.createElement('div');
-        div.className = 'post';
-
-        //add the title
-        const title = document.createElement('h2');
-        title.textContent = post.title;
-        title.className = 'post-title';
-
-        //add the content
-        const content = document.createElement('p');
-        content.textContent = post.content;
-        content.className = 'post-content';
-
-        //add the author
-        const author = document.createElement('p');
-        author.textContent = 'written by ' + post.author;
-        author.className = 'post-author';
-
-        //add the time
-        const time = document.createElement('small');
-        time.textContent = post.date;
-        time.className = 'post-date';
-
-        //add the date
-        const date = document.createElement('small');
-        date.textContent = post.time.substring(0, 5);
-        date.className = 'post-date';
-
-
-        //add all new elements to the div and add the div to the posts-div
-        div.appendChild(title);
-        div.appendChild(content);
-        div.appendChild(author);
-        div.appendChild(time);
-        div.appendChild(date);
-
-        //add delete button
-        if (currentUser == post.author) {
-          const delBtn = document.createElement('div');
-          delBtn.textContent = 'X';
-          delBtn.className = 'delete-btn';
-          delBtn.id = post.id;
-
-          //add the 'delete a single post'-function
-          delBtn.addEventListener('click', (delBtn) => {
-            let postid = delBtn.path[0].id;
-            console.log(postid);
-            fetch(API_DELETE_ID + postid, {
-              method: 'POST',
-              headers: {
-                'content-type': 'application/json'
-              }
-            });
-            //make sure the server has enough time to fetch the new data
-            setTimeout(loadAllPosts, 500);
-          });
-          div.appendChild(delBtn);
-        };
-
-        // if(isLoggedIn){
-        //   const addCommentBtn = document.createElement('div');
-        //   addCommentBtn.textContent = `Add comment(${post.comments.length})`;
-        //   addCommentBtn.className = 'add-comment-btn';
-        //   addCommentBtn.id = post.uid;
-
-        //   addCommentBtn.addEventListener('click', (addCommentBtn) => {
-        //     let id = addCommentBtn.path[0].id;
-        //     console.log(id);
-        //   });
-        //   div.appendChild(addCommentBtn);
-        // };
-        postsElement.appendChild(div);
-      });
-    });
+      allData = allPosts;
+      allData.reverse();
+      createPosts(allData);
+    })
+    .catch(err => console.log(err));
 };
 
 // login button
 login.addEventListener('click', () => {
   if (login.textContent == 'Login') {
-    window.location.replace('/home');
-  };
+    window.location.replace('/login');
+  }
+  else{
+    window.location.replace('/dashboard');
+  }
 });
 
+// register button
 register.addEventListener('click', () => {
   window.location.replace('/login');
 });
@@ -214,10 +142,49 @@ logout.addEventListener('click', () => {
   window.location.replace('/');
 });
 
+// filter posts
+searchInput.addEventListener('input', (e) => {
+  column1.innerHTML = '';
+  column2.innerHTML = '';
+  column3.innerHTML = '';
+
+
+  e.preventDefault();
+  input = searchInput.value;
+  searchResults = [];
+  cleanResults = [];
+
+  for(let el of allData){
+
+    if(el.title.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.content.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.author.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.date.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    };
+  };
+  cleanData();
+  createPosts(cleanResults);
+});
+
+//Delete double entries and return clean array
+function cleanData(){
+  cleanResults = searchResults.filter(function(item, pos, self) {
+    return self.indexOf(item) == pos;
+  });
+};
+
 function editor() {
-  document.querySelector('#title').classList.remove('hidden2');
-  document.querySelector('#content').classList.remove('hidden2');
-  document.querySelector('.post-form').style.height = 200 + 'px';
-  send.style.transform = 'translateY(0px)';
+  document.querySelector('#title').classList.remove('hidden');
+  document.querySelector('#content').classList.remove('hidden');
+  postForm.classList.remove('hidden');
+  postForm.style.height = 200 + 'px';
   send.innerHTML = 'Send';
+  send.style.marginTop = '180px'
 };
