@@ -73,9 +73,18 @@ app.get('/login', (req, res) => {
 });
 
 
-// messenger desktop (width > 900)
+// home
 app.get('/home', authenticate, (req, res) => {
   res.sendFile(__dirname+ '/client/html/index.html');
+});
+
+// dashboard
+app.get('/dashboard', authenticate, (req, res) => {
+    res.sendFile(__dirname+ '/client/dashboard/dashboard.html');
+});
+
+app.get(('/logout'), authenticate, (req, res) => {
+  res.redirect('/api/logout');
 });
 
 
@@ -205,6 +214,7 @@ app.post('/api/login', (req, res) => {
 // ########## LOGOUT ROUTE ##########
 app.get('/api/logout', authenticate, (req, res) => {
   req.session.destroy();
+  res.redirect('/');
 });
 
 // ########## GET ALL POSTS ##########
@@ -223,6 +233,20 @@ app.get('/api', (req, res) => {
     };
   });
   getMaxID();
+});
+
+app.get('/api/own', authenticate, (req, res) => {
+  db.Posts.find({author:req.session.username}, (err, posts) => {
+    if(err){
+      console.log('database error', err);
+    }
+    else if(posts == null){
+      res.send('No data');
+    }
+    else{
+      res.json(posts);
+    };
+  });
 });
 
 // ########## SAVE A POST ##########
