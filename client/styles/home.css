@@ -33,6 +33,8 @@ header h1 {
   }
 }
 
+/* ######### NAVIGATON STYLE ######### */
+
 nav {
   height: 80px;
   width: 100%;
@@ -48,6 +50,24 @@ nav {
 nav a{
   text-decoration: none;
   color: rgb(220,220,220);
+}
+
+.user {
+  float: right;
+  list-style-type: none;
+  color: aliceblue;
+  line-height: 40px;
+}
+
+.user li {
+  float: left;
+  padding: 10px 10px 8px 10px;
+  font-size: 140%;
+  cursor: pointer;
+}
+
+.user li:hover {
+  color: rgb(255, 255, 255);
 }
 
 /* ######### MOBILE NAVIGATION ######### */
@@ -129,24 +149,6 @@ nav a{
   background-color: rgb(180,0,0);
 }
 
-.user {
-  float: right;
-  list-style-type: none;
-  color: aliceblue;
-  line-height: 40px;
-}
-
-.user li {
-  float: left;
-  padding: 10px 10px 8px 10px;
-  font-size: 140%;
-  cursor: pointer;
-}
-
-.user li:hover {
-  color: rgb(255, 255, 255);
-}
-
 .wrapper {
   position: relative;
   width: 90%;
@@ -161,11 +163,15 @@ nav a{
   }
 }
 
+/* ######### SEARCHBAR STYLE ######### */
+
 .search-input{
   margin: 0 auto;
-  width: 60%;
+  width: 90%;
   padding: 5px;
 }
+
+/* ######### TEXT EDITOR STYLE ######### */
 
 .post-form {
   width: 50%;
@@ -182,6 +188,7 @@ nav a{
   text-align: center;
   border: 1px solid rgb(140, 140, 140);
   transition: all 750ms ease-in-out;
+  overflow-wrap: anywhere;
 }
 
 #content {
@@ -215,6 +222,8 @@ nav a{
   padding: 0;
 }
 
+/* ######### POST STYLE ######### */
+
 .post {
   position: relative;
   width: 100%;
@@ -232,60 +241,6 @@ nav a{
   background-color: #E65100;
 }
 
-.column {
-  position: absolute;
-  width: 32%;
-  height: 100%;
-}
-
-.col1 {
-  left: 0%;
-}
-
-.col2 {
-  left: 33%;
-}
-
-.col3 {
-  left: 66%;
-}
-
-
-.col1 .post:nth-child(3n+1) {
-  height: 450px;
-  background-color: #E91E63;
-  animation: slide-right-left 800ms ease-in;
-}
-
-.col1 .post:nth-child(4n+2) {
-  height: 550px;
-  background-color: #03A9F4;
-  animation: slide-left-right 1000ms ease-in;
-}
-
-.col2 .post:nth-child(3n+1) {
-  height: 600px;
-  background-color: #009688;
-  animation: slide-left-right 700ms ease-in;
-}
-
-.col2 .post:nth-child(3n+3) {
-  height: 400px;
-  background-color: #FF9800;
-  animation: slide-right-left 1200ms ease-in;
-}
-
-.col3 .post:nth-child(3n+2) {
-  height: 650px;
-  background-color: #7CB342;
-  animation: slide-right-left 600ms ease-in;
-}
-
-.col3 .post:nth-child(5n+2) {
-  height: 500px;
-  background-color: #E53935;
-  animation: slide-right-left 900ms ease-in;
-}
 
 .post-title {
   padding: 20px;
@@ -328,10 +283,138 @@ nav a{
   font-weight: bolder;
 }
 
+/* ######### LAYOUT STYLE ######### */
+
+.column {
+  position: absolute;
+  width: 32%;
+  height: 100%;
+}
+
+.col1 {
+  left: 0%;
+}
+
+.col2 {
+  left: 33%;
+}
+
+.col3 {
+  left: 66%;
+}
+
+.col1 .post:nth-child(3n+1) {
+  height: 450px;
+  background-color: #E91E63;
+  animation: slide-right-left 800ms ease-in;
+}
+
+.col1 .post:nth-child(4n+2) {
+  height: 550px;
+  background-color: #03A9F4;
+  animation: slide-left-right 1000ms ease-in;
+}
+
+.col2 .post:nth-child(3n+1) {
+  height: 600px;
+  background-color: #009688;
+  animation: slide-left-right 700ms ease-in;
+}
+
+.col2 .post:nth-child(3n+3) {
+  height: 400px;
+  background-color: #FF9800;
+  animation: slide-right-left 1200ms ease-in;
+}
+
+.col3 .post:nth-child(3n+2) {
+  height: 650px;
+  background-color: #7CB342;
+  animation: slide-right-left 600ms ease-in;
+}
+
+.col3 .post:nth-child(5n+2) {
+  height: 500px;
+  background-color: #E53935;
+  animation: slide-right-left 900ms ease-in;
+}
+
+/* ######### FULL STORY STYLE ######### */
+
+.story-full{
+  position: fixed;
+  width: 85%;
+  max-width: 900px;
+  left: 50%;
+  top: 0%;
+  bottom: 0%;
+  transform: translateX(-50%);
+  color: rgb(220,220,220);
+  background-color: rgba(0,0,0,0.8);
+  overflow-y: scroll;
+  z-index: 301;
+  padding: 20px;
+}
+
+.story-title{
+  text-align: center;
+  font-size: 150%;
+  padding: 20px;
+}
+
+.info-row{
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid rgba(150, 150, 150, 0.4);
+}
+
+.story-author{
+  float: right;
+}
+
+.story-date{
+  float: left;
+}
+
+.story-content{
+  width: 75%;
+  height: 100%;
+  margin: 100px auto;
+  padding: 0 10px 0 10px;
+}
+
+@media screen and (max-width: 800px){
+  .story-content{
+    width: 100%;
+    
+  }
+  .story-full{
+    width: 100%;
+    margin: 120px auto;
+    max-width: 100%;
+  }
+}
+
+.dark-container{
+  position: fixed;
+  top: 0;
+  z-index: 300;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+}
+
+@media screen and (max-width: 800px){
+  .dark-container{
+    height: 120%;
+  }
+}
+
+
+/* ######## HELPER CLASSES ######## */
 .hidden{
   opacity: 0;
   visibility: hidden;
-  /* display: none; */
   height: 0px;
   width: 0px;
 }
