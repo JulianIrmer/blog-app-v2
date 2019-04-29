@@ -1,0 +1,20 @@
+/* width */
+
+.story-full::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+.story-full::-webkit-scrollbar-track {
+  background: rgb(20,20,20); 
+}
+
+/* Handle */
+.story-full::-webkit-scrollbar-thumb {
+  background: rgb(180,180,180); 
+}
+
+/* Handle on hover */
+.story-full::-webkit-scrollbar-thumb:hover {
+  background: rgb(200,200,200); 
+}
