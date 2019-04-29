@@ -1,13 +1,11 @@
+
 let isLoggedIn = false;
 let screenWidth = window.innerWidth;
 let currentUser;
-let allData = [];
-let ownData = [];
+let data = [];
+let cleanResults = [];
 
 const postForm = document.querySelector('.post-form');
-const loginForm = document.querySelector('.login');
-const registerForm = document.querySelector('.register');
-// const postsElement = document.querySelector('.posts');
 const column1= document.querySelector('.col1');
 const column2 = document.querySelector('.col2');
 const column3 = document.querySelector('.col3');
@@ -29,6 +27,8 @@ const bar1 = document.querySelector('.bar1');
 const bar2 = document.querySelector('.bar2');
 const bar3 = document.querySelector('.bar3');
 const searchInput = document.querySelector('.search-input');
+const fullStory = document.querySelector('.story-full');
+const darkContainer = document.querySelector('.dark-container');
 
 
 const API_GET_ALL = '/api';
@@ -39,6 +39,28 @@ const API_DELETE_ID = '/api/delete/';
 const API_LOGIN = '/api/login';
 const API_REGISTER = '/api/register';
 const API_CHECK_SESSION = '/api/checksession';
+
+// check if user if logged in
+function checkSession() {
+  fetch(API_CHECK_SESSION)
+    .then(response => {
+      return response.json()
+    })
+    .then(response => {
+      currentUser = response.username;
+      console.log(response);
+      if (response.isLoggedIn) {
+        login.innerHTML = 'Dashboard';
+        register.classList.add('hidden');
+        isLoggedIn = response.isLoggedIn;
+      } else{
+        logout.classList.add('hidden');
+        postForm.classList.add('hidden');
+        send.classList.add('hidden');
+      };
+    })
+    .catch(err => console.log(err));
+};
 
 function editor() {
   document.querySelector('#title').classList.remove('hidden');
@@ -73,20 +95,31 @@ function createPosts(data){
 
     //add the time
     const time = document.createElement('small');
-    time.textContent = post.date;
-    time.className = 'post-date';
+    time.textContent = post.time.substring(0,5);
+    time.className = 'post-time';
 
     //add the date
     const date = document.createElement('small');
-    date.textContent = post.time.substring(0, 5);
+    date.textContent = post.date;
     date.className = 'post-date';
 
     //add all new elements to the div and add the div to the posts-div
     div.appendChild(title);
     div.appendChild(content);
     div.appendChild(author);
-    div.appendChild(time);
-    // div.appendChild(date);
+    // div.appendChild(time);
+    div.appendChild(date);
+
+    // open the full story on click
+    div.addEventListener('click', () => {
+      fullStory.classList.remove('hidden');
+      darkContainer.classList.remove('hidden');
+      fullStory.querySelector('.story-title').textContent = post.title;
+      fullStory.querySelector('.story-date').textContent = post.date;
+      fullStory.querySelector('.story-author').textContent = 'written by ' +post.author;
+      fullStory.querySelector('.story-content').textContent = post.content;
+      fullStory.scrollTop = 0;
+    });
 
     //add delete button only when the user is also the author
     const delBtn = document.createElement('div');
@@ -107,9 +140,13 @@ function createPosts(data){
       //make sure the server has enough time to fetch the new data
       setTimeout(loadAllPosts, 500);
     });
+    console.log(isLoggedIn);
+    if(isLoggedIn){
+      div.appendChild(delBtn);
+    }
 
-    div.appendChild(delBtn);
 
+    // arrange post in 3, 2 or 1 col 
     if(screenWidth > 1100){
       if(post.id % 2 == 0){
         column2.appendChild(div);
@@ -149,11 +186,144 @@ function adaptContentLength(){
   const posts = document.querySelectorAll('.post');
   console.log(posts);
   for(let el of posts){
-    if(el.style.height < 420){
-      el.innerHTML.substring(0,200);
+    if(el.childNodes[0].innerHTML.length > 99){
+      el.childNodes[0].innerHTML = el.childNodes[0].innerHTML.substring(0,100)+'...';
     }
-    else if(el.style.height <= 550){
-      el.innerHTML.substring(0,300);
+
+    const height = el.clientHeight;
+    if(screenWidth > 1100){
+      if(height == 350){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,200)+'...';
+      }
+      else if(height == 400){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,250)+'...';
+      }
+      else if(height == 450){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,300)+'...';
+      }
+      else if(height == 500){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,350)+'...';
+      }
+      else if(height == 550){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,400)+'...';
+      }
+      else if(height == 600){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,450)+'...';
+      }
+      else if(height == 650){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
+      };
     }
+    else if(screenWidth > 800){
+      if(height == 350){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,200)+'...';
+      }
+      else if(height == 400){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,250)+'...';
+      }
+      else if(height == 450){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,300)+'...';
+      }
+      else if(height == 500){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,350)+'...';
+      }
+      else if(height == 550){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,400)+'...';
+      }
+      else if(height == 600){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,450)+'...';
+      }
+      else if(height == 650){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
+      };
+    }
+    else if(screenWidth < 800){
+      if(height == 350){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,200)+'...';
+      }
+      else if(height == 400){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,250)+'...';
+      }
+      else if(height == 450){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,300)+'...';
+      }
+      else if(height == 500){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,350)+'...';
+      }
+      else if(height == 550){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,400)+'...';
+      }
+      else if(height == 600){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,450)+'...';
+      }
+      else if(height == 650){
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
+      };
+    }
+  };
+};
+
+searchInput.addEventListener('input', (e) => {
+  e.preventDefault();
+
+  const input = searchInput.value;
+  let searchResults = [];
+
+  column1.innerHTML = '';
+  column2.innerHTML = '';
+  column3.innerHTML = '';
+
+
+  searchResults = [];
+  cleanResults = [];
+  console.log(input);
+  for(let el of data){
+    if(el.title.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.content.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.author.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    }
+    else if(el.date.toLowerCase().includes(input.toLowerCase())){
+      searchResults.push(el);
+    };
+  };
+  cleanData(searchResults);
+  createPosts(cleanResults);
+});
+
+//Delete double entries and return clean array
+function cleanData(input){
+  cleanResults = input.filter(function(item, pos, self) {
+    return self.indexOf(item) == pos;
+  });
+};
+
+// login button
+login.addEventListener('click', () => {
+  if (login.textContent == 'Login') {
+    window.location.replace('/login');
   }
-}
+  else{
+    window.location.replace('/dashboard');
+  }
+});
+
+// register button
+register.addEventListener('click', () => {
+  window.location.replace('/login');
+});
+
+// logout button
+logout.addEventListener('click', () => {
+  fetch('/api/logout');
+  window.location.replace('/');
+});
+
+darkContainer.addEventListener('click', () => {
+  fullStory.classList.add('hidden');
+  darkContainer.classList.add('hidden');
+});
