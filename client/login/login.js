@@ -171,7 +171,7 @@ fetch('/api/login', {
   .then(response => {
     console.log(response);
     if(response.login == true){
-      window.location.replace('/home');
+      window.location.replace('/');
       console.log('loggin in...');
     }
     else{
