@@ -72,19 +72,13 @@ app.get('/login', (req, res) => {
   res.sendFile(__dirname+ '/client/login/login.html');
 });
 
-
-// home
-app.get('/home', authenticate, (req, res) => {
-  res.sendFile(__dirname+ '/client/html/index.html');
-});
-
 // dashboard
 app.get('/dashboard', authenticate, (req, res) => {
     res.sendFile(__dirname+ '/client/dashboard/dashboard.html');
 });
 
 app.get(('/logout'), authenticate, (req, res) => {
-  res.redirect('/api/logout');
+  res.redirect('/');
 });
 
 
