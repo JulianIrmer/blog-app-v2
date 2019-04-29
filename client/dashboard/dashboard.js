@@ -1,7 +1,8 @@
-let cleanResults = [];
-let searchResults = [];
 
 window.onload = () => {
+  checkSession();
+  loadOwnPosts();
+
   if(window.innerWidth <= 600){
     burgerMenu.classList.remove('hidden');
   };
@@ -9,7 +10,6 @@ window.onload = () => {
     burgerMenu.classList.add('hidden');
   };
 
-  loadOwnPosts();
 
   // open and close the mobile nav on click event
   burgerMenu.addEventListener('click', () => {
@@ -23,53 +23,10 @@ window.onload = () => {
     login.innerHTML = 'Dashboard';
     register.classList.add('hidden');
     isLoggedIn = true;
-  } else {
-    logout.classList.add('hidden');
-    postForm.classList.add('hidden');
   };
-
-  searchInput.addEventListener('input', (e) => {
-    column1.innerHTML = '';
-    column2.innerHTML = '';
-    column3.innerHTML = '';
-
-
-    e.preventDefault();
-    input = searchInput.value;
-    searchResults = [];
-    cleanResults = [];
-    console.log(input);
-    for(let el of ownData){
-
-      if(el.title.toLowerCase().includes(input.toLowerCase())){
-        searchResults.push(el);
-      }
-      else if(el.content.toLowerCase().includes(input.toLowerCase())){
-        searchResults.push(el);
-      }
-      else if(el.author.toLowerCase().includes(input.toLowerCase())){
-        searchResults.push(el);
-      }
-      else if(el.date.toLowerCase().includes(input.toLowerCase())){
-        searchResults.push(el);
-      };
-    };
-    cleanData();
-    createPosts(cleanResults);
-  });
-  // get own posts from db and display them
 };
 
-
-//Delete double entries and return clean array
-function cleanData(){
-  cleanResults = searchResults.filter(function(item, pos, self) {
-    return self.indexOf(item) == pos;
-  });
-};
-
-
-//create new html elements for every element in the array
+// load all data data from the logged in user and create html elements
 function loadOwnPosts() {
   column1.innerHTML = '';
   column2.innerHTML = '';
@@ -81,12 +38,10 @@ function loadOwnPosts() {
     })
     .then((ownPosts) => {
       console.log(ownPosts);
-      ownData = ownPosts;
-      ownData.reverse();
-      createPosts(ownData);
+      data = ownPosts;
+      data.reverse();
+      createPosts(data);
     })
     .catch(err => console.log(err));
 };
-
-
 

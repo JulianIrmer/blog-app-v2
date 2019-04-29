@@ -1,8 +1,3 @@
-
-let cleanResults = [];
-let searchResults = [];
-
-
 window.onload = () => {
   checkSession();
   loadAllPosts();
@@ -34,26 +29,6 @@ window.onload = () => {
   };
 };
 
-// check if user if logged in
-function checkSession() {
-  fetch(API_CHECK_SESSION)
-    .then(response => {
-      return response.json()
-    })
-    .then(response => {
-      currentUser = response.username;
-      if (response.isLoggedIn) {
-        login.innerHTML = 'Dashboard';
-        register.classList.add('hidden');
-        isLoggedIn = true;
-      } else {
-        logout.classList.add('hidden');
-        postForm.classList.add('hidden');
-      };
-    })
-    .catch(err => console.log(err));
-};
-
 //create a post
 send.addEventListener('click', (event) => {
   event.preventDefault();
@@ -83,7 +58,6 @@ send.addEventListener('click', (event) => {
     author
   };
 
-  console.log('hello');
   if (isContent && isTitle) {
     //save a post to mongodb
     fetch(API_SEND, {
@@ -103,7 +77,7 @@ send.addEventListener('click', (event) => {
 });
 
 
-//create new html elements for every element in the array
+// load all data data and create html elements
 function loadAllPosts() {
   column1.innerHTML = '';
   column2.innerHTML = '';
@@ -114,70 +88,12 @@ function loadAllPosts() {
       return response.json();
     })
     .then((allPosts) => {
-      allData = allPosts;
-      allData.reverse();
-      createPosts(allData);
+      data = allPosts;
+      data.reverse();
+
+      createPosts(data);
     })
     .catch(err => console.log(err));
-};
-
-// login button
-login.addEventListener('click', () => {
-  if (login.textContent == 'Login') {
-    window.location.replace('/login');
-  }
-  else{
-    window.location.replace('/dashboard');
-  }
-});
-
-// register button
-register.addEventListener('click', () => {
-  window.location.replace('/login');
-});
-
-// logout button
-logout.addEventListener('click', () => {
-  fetch('/api/logout');
-  window.location.replace('/');
-});
-
-// filter posts
-searchInput.addEventListener('input', (e) => {
-  column1.innerHTML = '';
-  column2.innerHTML = '';
-  column3.innerHTML = '';
-
-
-  e.preventDefault();
-  input = searchInput.value;
-  searchResults = [];
-  cleanResults = [];
-
-  for(let el of allData){
-
-    if(el.title.toLowerCase().includes(input.toLowerCase())){
-      searchResults.push(el);
-    }
-    else if(el.content.toLowerCase().includes(input.toLowerCase())){
-      searchResults.push(el);
-    }
-    else if(el.author.toLowerCase().includes(input.toLowerCase())){
-      searchResults.push(el);
-    }
-    else if(el.date.toLowerCase().includes(input.toLowerCase())){
-      searchResults.push(el);
-    };
-  };
-  cleanData();
-  createPosts(cleanResults);
-});
-
-//Delete double entries and return clean array
-function cleanData(){
-  cleanResults = searchResults.filter(function(item, pos, self) {
-    return self.indexOf(item) == pos;
-  });
 };
 
 function editor() {
