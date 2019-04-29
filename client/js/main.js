@@ -1,6 +1,13 @@
 window.onload = () => {
   loadAllPosts();
   checkSession();
+  
+  if(window.innerWidth <= 600){
+    burgerMenu.classList.remove('hidden');
+  };
+  if(window.innerWidth > 600){
+    burgerMenu.classList.add('hidden');
+  };
 };
 
 // load all data data and create html elements

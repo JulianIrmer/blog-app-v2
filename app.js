@@ -77,6 +77,7 @@ app.get('/dashboard', authenticate, (req, res) => {
     res.sendFile(__dirname+ '/client/dashboard/dashboard.html');
 });
 
+// logout
 app.get(('/logout'), authenticate, (req, res) => {
   res.redirect('/');
 });

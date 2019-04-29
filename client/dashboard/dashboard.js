@@ -3,10 +3,17 @@ window.onload = () => {
   loadOwnPosts();
   checkSession();
 
+  if(window.innerWidth <= 600){
+    burgerMenu.classList.remove('hidden');
+  };
+  if(window.innerWidth > 600){
+    burgerMenu.classList.add('hidden');
+  };
+
   if(isLoggedIn) {
     login.innerHTML = 'Dashboard';
+    mobileLogout.textContent = 'Logout'
     register.classList.add('hidden');
-    isLoggedIn = true;
   };
 };
 

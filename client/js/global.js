@@ -21,6 +21,7 @@ const logout = document.querySelector('.logout-li');
 const mobileNav = document.querySelector('.mobile-nav');
 const mobileUl = document.querySelector('.mobile-ul');
 const mobileLi = document.querySelectorAll('.mobile-li');
+const mobileLogout = document.querySelector('.mobile-logout');
 const mobileA = document.querySelector('.mobile-link');
 const burgerMenu = document.querySelector('.burger-menu');
 const bar1 = document.querySelector('.bar1');
@@ -41,14 +42,7 @@ const API_REGISTER = '/api/register';
 const API_CHECK_SESSION = '/api/checksession';
 
 window.onload = () => {
-  checkSession();
-
-  if(window.innerWidth <= 600){
-    burgerMenu.classList.remove('hidden');
-  };
-  if(window.innerWidth > 600){
-    burgerMenu.classList.add('hidden');
-  };
+  
 };
 
 // check if user if logged in
@@ -391,6 +385,18 @@ for(let el of mobileLi){
     burgerMenu.classList.remove('no-border');
   });
 };
+
+mobileLogout.addEventListener('click', () => {
+  if(isLoggedIn){
+    mobileLogout.textContent = 'Logout'
+    fetch('/api/logout');
+    window.location.replace('/');
+  }
+  else if(!isLoggedIn){
+    mobileLogout.textContent = 'Login'
+    window.location.replace('/login');
+  };
+});
 
 // open and close the mobile nav on click event
 burgerMenu.addEventListener('click', () => {
