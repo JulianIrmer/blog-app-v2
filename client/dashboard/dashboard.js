@@ -1,25 +1,9 @@
 
 window.onload = () => {
-  checkSession();
   loadOwnPosts();
+  checkSession();
 
-  if(window.innerWidth <= 600){
-    burgerMenu.classList.remove('hidden');
-  };
-  if(window.innerWidth > 600){
-    burgerMenu.classList.add('hidden');
-  };
-
-
-  // open and close the mobile nav on click event
-  burgerMenu.addEventListener('click', () => {
-    mobileNav.classList.toggle('hidden');
-    bar1.classList.toggle('left-to-right');
-    bar2.classList.toggle('no-opacity');
-    bar3.classList.toggle('right-to-left');
-  });
-
-  if (isLoggedIn) {
+  if(isLoggedIn) {
     login.innerHTML = 'Dashboard';
     register.classList.add('hidden');
     isLoggedIn = true;

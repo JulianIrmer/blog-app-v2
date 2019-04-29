@@ -40,6 +40,17 @@ const API_LOGIN = '/api/login';
 const API_REGISTER = '/api/register';
 const API_CHECK_SESSION = '/api/checksession';
 
+window.onload = () => {
+  checkSession();
+
+  if(window.innerWidth <= 600){
+    burgerMenu.classList.remove('hidden');
+  };
+  if(window.innerWidth > 600){
+    burgerMenu.classList.add('hidden');
+  };
+};
+
 // check if user if logged in
 function checkSession() {
   fetch(API_CHECK_SESSION)
@@ -323,6 +334,73 @@ logout.addEventListener('click', () => {
   window.location.replace('/');
 });
 
+// create a story
+send.addEventListener('click', (event) => {
+  event.preventDefault();
+  const title = document.querySelector('#title').value;
+  const content = document.querySelector('#content').value;
+  const time = new Date().toLocaleTimeString();
+  const date = new Date().toLocaleDateString();
+  const author = currentUser;
+  let id;
+  let isContent = false;
+  let isTitle = false;
+
+  if (title.length > 0) {
+    isTitle = true;
+  };
+
+  if (content.length > 0) {
+    isContent = true;
+  };
+
+  const data = {
+    title,
+    content,
+    id,
+    time,
+    date,
+    author
+  };
+
+  if (isContent && isTitle) {
+    //save a post to mongodb
+    fetch(API_SEND, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .catch(err => console.log(err));
+  };
+  //reload the window
+  // window.location.reload();
+  loadAllPosts();
+  document.querySelector('#title').value = '';
+  document.querySelector('#content').value = '';
+});
+
+// close mobile nav if link is clicked
+for(let el of mobileLi){
+  el.addEventListener('click', () => {
+    mobileNav.classList.add('hidden');
+    bar1.classList.remove('left-to-right');
+    bar2.classList.remove('no-opacity');
+    bar3.classList.remove('right-to-left');
+    burgerMenu.classList.remove('no-border');
+  });
+};
+
+// open and close the mobile nav on click event
+burgerMenu.addEventListener('click', () => {
+  mobileNav.classList.toggle('hidden');
+  bar1.classList.toggle('left-to-right');
+  bar2.classList.toggle('no-opacity');
+  bar3.classList.toggle('right-to-left');
+});
+
+// show full story 
 darkContainer.addEventListener('click', () => {
   fullStory.classList.add('hidden');
   darkContainer.classList.add('hidden');
