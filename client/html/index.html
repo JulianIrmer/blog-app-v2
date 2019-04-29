@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HOME | SHARE YOUR STORY</title>
   <link rel="stylesheet" href="../styles/home.css">
+  <link rel="stylesheet" href="../styles/scrollbar.css">
 </head>
 
 <body>
@@ -33,7 +34,7 @@
     </div>
 
   <div class="container">
-    <button class="send-btn" onclick="editor()">Add Post</button>
+    <button class="send-btn" onclick="editor()">Add Story</button>
   </div>
   <form class="post-form hidden">
     <input class="hidden" type="text" id="title" name="title" placeholder="Title..." autocomplete="off">
@@ -41,13 +42,23 @@
   </form>
 
   <div class="wrapper">
-      <input type="text" class="search-input" placeholder="Search through your posts...">
+      <input type="text" class="search-input" placeholder="Search through Stories...">
 
     <div class="posts">
       <div class="column col1"></div>
       <div class="column col2"></div>
       <div class="column col3"></div>
     </div>
+  </div>
+
+  <div class="dark-container hidden"></div>
+  <div class="story-full hidden">
+    <p class="story-title"></p>
+    <div class="info-row">
+      <p class="story-author"></p>
+      <p class="story-date"></p>
+    </div>
+    <p class="story-content"></p>
   </div>
   
   <script src="../js/global.js"></script>
