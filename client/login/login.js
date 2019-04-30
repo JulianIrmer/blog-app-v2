@@ -13,24 +13,6 @@ const container = document.querySelector('.container');
 const container2 = document.querySelector('.container2');
 const msgWrapper = document.querySelector('.messenger-wrapper');
 const loginWrapper = document.querySelector('.login-wrapper');
-// ###################################################################
-
-
-// global variables
-let nameCache = [];
-// let pwCheck = false;
-let isNameValid = false;
-let isEmailValid = false;
-let loggedInName = '';
-// ###################################################################
-
-checkCookie();
-
-function checkCookie(){
-  if(document.cookie.length > 0){
-    loginName.value = document.cookie;
-  }
-}
 
 // switch between login and registration
 show.addEventListener('click', () => {
@@ -123,7 +105,7 @@ registerBtn.addEventListener('click', (event) => {
         }, 2000);
 
         console.log('User registered');
-        window.location.replace('/home');
+        window.location.replace('/');
       }
       else if(response.email == false){
         nameHintRegister.classList.remove('hidden');
