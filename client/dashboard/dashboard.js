@@ -9,6 +9,9 @@ window.onload = () => {
   if(window.innerWidth > 600){
     burgerMenu.classList.add('hidden');
   };
+  if(window.innerWidth < 800){
+    fullStory.style.height = window.innerHeight-100;
+  }
 
   if(isLoggedIn) {
     login.innerHTML = 'Dashboard';
