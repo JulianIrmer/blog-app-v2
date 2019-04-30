@@ -1,5 +1,6 @@
 
 let isLoggedIn = false;
+let isMobile = false;
 let screenWidth = window.innerWidth;
 let currentUser;
 let data = [];
@@ -24,12 +25,14 @@ const mobileLi = document.querySelectorAll('.mobile-li');
 const mobileLogout = document.querySelector('.mobile-logout');
 const mobileA = document.querySelector('.mobile-link');
 const burgerMenu = document.querySelector('.burger-menu');
+const burgerDiv = document.querySelectorAll('.burger-div');
 const bar1 = document.querySelector('.bar1');
 const bar2 = document.querySelector('.bar2');
 const bar3 = document.querySelector('.bar3');
 const searchInput = document.querySelector('.search-input');
 const fullStory = document.querySelector('.story-full');
 const darkContainer = document.querySelector('.dark-container');
+const back = document.querySelector('.back-btn');
 
 
 const API_GET_ALL = '/api';
@@ -124,6 +127,11 @@ function createPosts(data){
       fullStory.querySelector('.story-author').textContent = 'written by ' +post.author;
       fullStory.querySelector('.story-content').textContent = post.content;
       fullStory.scrollTop = 0;
+      fullStory.querySelector('.story-content').style.height = window.innerHeight - back.style.height+ 'px';
+
+      back.classList.remove('hidden');
+      burgerMenu.classList.add('hidden');
+      document.body.style.overflow = 'hidden';
     });
 
     //add delete button only when the user is also the author
@@ -145,8 +153,8 @@ function createPosts(data){
       //make sure the server has enough time to fetch the new data
       setTimeout(loadAllPosts, 500);
     });
-    console.log(isLoggedIn);
-    if(isLoggedIn){
+    console.log();
+    if(post.author == currentUser){
       div.appendChild(delBtn);
     }
 
@@ -213,10 +221,10 @@ function adaptContentLength(){
         el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,400)+'...';
       }
       else if(height == 600){
-        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,450)+'...';
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
       }
       else if(height == 650){
-        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,550)+'...';
       };
     }
     else if(screenWidth > 800){
@@ -236,10 +244,10 @@ function adaptContentLength(){
         el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,400)+'...';
       }
       else if(height == 600){
-        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,450)+'...';
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
       }
       else if(height == 650){
-        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
+        el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,550)+'...';
       };
     }
     else if(screenWidth < 800){
@@ -410,4 +418,19 @@ burgerMenu.addEventListener('click', () => {
 darkContainer.addEventListener('click', () => {
   fullStory.classList.add('hidden');
   darkContainer.classList.add('hidden');
+  back.classList.add('hidden');
+  document.body.style.overflow = 'scroll';
+
+});
+
+back.addEventListener('click', () => {
+  fullStory.classList.add('hidden');
+  darkContainer.classList.add('hidden');
+  back.classList.add('hidden');
+  document.body.style.overflow = 'scroll';
+
+
+  if(screenWidth < 800){
+    burgerMenu.classList.remove('hidden');
+  };
 });
