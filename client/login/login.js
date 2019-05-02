@@ -105,7 +105,7 @@ registerBtn.addEventListener('click', (event) => {
         }, 2000);
 
         console.log('User registered');
-        window.location.replace('/');
+        window.location.replace('/login');
       }
       else if(response.email == false){
         nameHintRegister.classList.remove('hidden');
