@@ -28,3 +28,50 @@ function loadAllPosts() {
     })
     .catch(err => console.log(err));
 };
+
+// create a story
+send.addEventListener('click', (event) => {
+  event.preventDefault();
+  const title = document.querySelector('#title').value;
+  const content = document.querySelector('#content').value;
+  const time = new Date().toLocaleTimeString();
+  const date = new Date().toLocaleDateString();
+  const author = currentUser;
+  let id;
+  let isContent = false;
+  let isTitle = false;
+
+  if (title.length > 0) {
+    isTitle = true;
+  };
+
+  if (content.length > 0) {
+    isContent = true;
+  };
+
+  const data = {
+    title,
+    content,
+    id,
+    time,
+    date,
+    author
+  };
+
+  if (isContent && isTitle) {
+    //save a post to mongodb
+    fetch(API_SEND, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      .catch(err => console.log(err));
+  };
+  //reload the window
+  // window.location.reload();
+  loadAllPosts();
+  document.querySelector('#title').value = '';
+  document.querySelector('#content').value = '';
+});
