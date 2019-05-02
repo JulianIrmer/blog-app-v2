@@ -44,9 +44,6 @@ const API_LOGIN = '/api/login';
 const API_REGISTER = '/api/register';
 const API_CHECK_SESSION = '/api/checksession';
 
-window.onload = () => {
-  
-};
 
 // check if user if logged in
 function checkSession() {
@@ -56,7 +53,6 @@ function checkSession() {
     })
     .then(response => {
       currentUser = response.username;
-      console.log(response);
       if (response.isLoggedIn) {
         login.innerHTML = 'Dashboard';
         register.classList.add('hidden');
@@ -143,7 +139,6 @@ function createPosts(data){
     //add the 'delete a single post'-function
     delBtn.addEventListener('click', (delBtn) => {
       let postid = delBtn.path[0].id;
-      console.log(postid);
       fetch(API_DELETE_ID + postid, {
         method: 'POST',
         headers: {
@@ -153,7 +148,6 @@ function createPosts(data){
       //make sure the server has enough time to fetch the new data
       setTimeout(loadAllPosts, 500);
     });
-    console.log();
     if(post.author == currentUser){
       div.appendChild(delBtn);
     }
@@ -197,7 +191,6 @@ function createPosts(data){
 
 function adaptContentLength(){
   const posts = document.querySelectorAll('.post');
-  console.log(posts);
   for(let el of posts){
     if(el.childNodes[0].innerHTML.length > 99){
       el.childNodes[0].innerHTML = el.childNodes[0].innerHTML.substring(0,100)+'...';
@@ -272,7 +265,7 @@ function adaptContentLength(){
       else if(height == 650){
         el.childNodes[1].innerHTML = el.childNodes[1].innerHTML.substring(0,500)+'...';
       };
-    }
+    };
   };
 };
 
@@ -289,7 +282,7 @@ searchInput.addEventListener('input', (e) => {
 
   searchResults = [];
   cleanResults = [];
-  console.log(input);
+
   for(let el of data){
     if(el.title.toLowerCase().includes(input.toLowerCase())){
       searchResults.push(el);
@@ -336,53 +329,6 @@ logout.addEventListener('click', () => {
   window.location.replace('/');
 });
 
-// create a story
-send.addEventListener('click', (event) => {
-  event.preventDefault();
-  const title = document.querySelector('#title').value;
-  const content = document.querySelector('#content').value;
-  const time = new Date().toLocaleTimeString();
-  const date = new Date().toLocaleDateString();
-  const author = currentUser;
-  let id;
-  let isContent = false;
-  let isTitle = false;
-
-  if (title.length > 0) {
-    isTitle = true;
-  };
-
-  if (content.length > 0) {
-    isContent = true;
-  };
-
-  const data = {
-    title,
-    content,
-    id,
-    time,
-    date,
-    author
-  };
-
-  if (isContent && isTitle) {
-    //save a post to mongodb
-    fetch(API_SEND, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
-      .catch(err => console.log(err));
-  };
-  //reload the window
-  // window.location.reload();
-  loadAllPosts();
-  document.querySelector('#title').value = '';
-  document.querySelector('#content').value = '';
-});
-
 // close mobile nav if link is clicked
 for(let el of mobileLi){
   el.addEventListener('click', () => {
@@ -423,14 +369,17 @@ darkContainer.addEventListener('click', () => {
 
 });
 
-back.addEventListener('click', () => {
-  fullStory.classList.add('hidden');
-  darkContainer.classList.add('hidden');
-  back.classList.add('hidden');
-  document.body.style.overflow = 'scroll';
-
-
-  if(screenWidth < 800){
-    burgerMenu.classList.remove('hidden');
-  };
-});
+// close the full story
+if(screenWidth < 800){
+  back.addEventListener('click', () => {
+    fullStory.classList.add('hidden');
+    darkContainer.classList.add('hidden');
+    back.classList.add('hidden');
+    document.body.style.overflow = 'scroll';
+  
+  
+    if(screenWidth < 800){
+      burgerMenu.classList.remove('hidden');
+    };
+  });
+};
